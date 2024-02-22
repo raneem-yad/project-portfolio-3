@@ -1,9 +1,10 @@
 import time
 import pyfiglet
-from tabulate import tabulate
+# from tabulate import tabulate
 from utils.theme import Colors
 import utils.helpers as helpers
 import user.user_func as user
+import utils.tables as table
 
 
 
@@ -14,16 +15,13 @@ def print_welcome_messages():
                        pyfiglet.figlet_format("Welcome to TaskTracker App!") + Colors.RESET)
 
 def print_option_table():
-    main_page_messages = [
-        ["Login\n", options[0]],
-        ["Create Account\n", options[1]],
-        ["App preview\n", options[2]],
-        ["Quit App\n", options[3]]
-    ]
+    messages = ["Login","Create Account","App preview","Quit App"]
     # Table headers
     headers = ["How we can Help you", "Press"]
-    # print(tabulate(main_page_messages, headers=headers, tablefmt="grid",showindex="always"))
-    print(tabulate(main_page_messages, headers=headers, tablefmt="grid"))
+    # create columns 
+    columns = table.create_columns(messages,options)
+    intro_table = table.TablesDrawing(columns,headers)
+    print(intro_table.print_table())
 
 
 def validate_user_input(option):
@@ -43,6 +41,20 @@ def validate_user_input(option):
         return False
     return True
 
+def login_input():
+    helpers.clear_terminal()
+    print("login window")
+    while True:
+        username = input(f"{Colors.MAGENTA}Enter your username :\n {Colors.RESET}")
+        password = input(f"{Colors.MAGENTA}Enter your password :\n {Colors.RESET}")
+        if(not user.login(username,password)):
+            print(" ")
+            print(f"{Colors.Red}Sorry,username or password are wrong.{Colors.RESET}")
+            print("Would you like to create an account?")
+
+                # 1. Yes
+                # 2. No, I'll try again
+                # """)
 
 def handel_option():
     while True:
@@ -50,10 +62,7 @@ def handel_option():
         if validate_user_input(user_option):
             break
     if user_option == '1':
-        helpers.clear_terminal()
-        print("login window")
-        data = user.get_login_info()
-        print(data)
+        login_input()
         # log_in()
     # elif user_option == '2':
     #     clear_terminal()
