@@ -1,6 +1,5 @@
 import time
 import pyfiglet
-# from tabulate import tabulate
 from utils.theme import Colors
 import utils.helpers as helpers
 import user.user_func as user
@@ -8,13 +7,14 @@ import utils.tables as table
 
 
 
-options = ["1","2","3","4"]
+
+OPTION_TEXT = f"{Colors.MAGENTA}Enter your choice here: \n {Colors.RESET}"
 def print_welcome_messages():
     # helpers.clear_terminal()
     helpers.txt_effect(Colors.BOLD+Colors.RED +
                        pyfiglet.figlet_format("Welcome to TaskTracker App!") + Colors.RESET)
 
-def print_option_table():
+def print_option_table(options):
     messages = ["Login","Create Account","App preview","Quit App"]
     # Table headers
     headers = ["How we can Help you", "Press"]
@@ -24,22 +24,50 @@ def print_option_table():
     print(intro_table.print_table())
 
 
-def validate_user_input(option):
+def validate_user_input(useroption,options):
     """
-    Validates any inputs with 4 options
+
     """
     try:
-        if option not in options:
+        if useroption not in options:
             raise ValueError(
                 f"You must enter a number between "
                 f"{Colors.BLUE}{options[0]}{Colors.RESET} and "
                 f"{Colors.BLUE}{options[-1]}{Colors.RESET}. "
-                f"You entered {Colors.RED}{option}{Colors.RESET}")
+                f"You entered {Colors.RED}{useroption}{Colors.RESET}")
     except ValueError as e:
         print(" ")
         print(f"{Colors.RED}Invalid entry:{Colors.RESET} {e}.\n")
         return False
     return True
+
+
+def login_extra_options(options):
+    messages = ["Yes","No, I'll try again"]
+    # Table headers
+    headers = ["Would you like to create an account?", "Press"]
+    # create columns 
+    columns = table.create_columns(messages,options)
+    intro_table = table.TablesDrawing(columns,headers)
+    print(intro_table.print_table())
+    
+
+def handel_extra_options(options): 
+    while True:
+        user_option = input(OPTION_TEXT)
+        if validate_user_input(user_option,options):
+            break
+    if user_option == '1':
+        helpers.clear_terminal()
+        print("we will create a new account")
+        # call create account function 
+        # create_account()
+    else:
+        helpers.clear_terminal()
+        print("re-enter your data")
+        # print(f"{Fore.RESET}----------------------------------\n")
+        # print(f"{Style.BRIGHT}Log In")
+        # print_section_border()
 
 def login_input():
     helpers.clear_terminal()
@@ -48,18 +76,17 @@ def login_input():
         username = input(f"{Colors.MAGENTA}Enter your username :\n {Colors.RESET}")
         password = input(f"{Colors.MAGENTA}Enter your password :\n {Colors.RESET}")
         if(not user.login(username,password)):
-            print(" ")
-            print(f"{Colors.Red}Sorry,username or password are wrong.{Colors.RESET}")
-            print("Would you like to create an account?")
+            print(f"{Colors.RED}\nSorry,username or password are wrong.{Colors.RESET}")
+            options = ['1','2']
+            login_extra_options(options)
+            handel_extra_options(options)
+        else:
+            break       
 
-                # 1. Yes
-                # 2. No, I'll try again
-                # """)
-
-def handel_option():
+def handel_option(options):
     while True:
-        user_option = input(f"{Colors.MAGENTA}Enter your choice here: \n {Colors.RESET}")
-        if validate_user_input(user_option):
+        user_option = input(OPTION_TEXT)
+        if validate_user_input(user_option,options):
             break
     if user_option == '1':
         login_input()
@@ -83,11 +110,12 @@ def handel_option():
         print(" ")
         print("----------------------------------")
 
-def main():
 
+def main():
     print_welcome_messages()
-    print_option_table()
-    handel_option()
+    options = ["1","2","3","4"]
+    print_option_table(options)
+    handel_option(options)
     
 
 main()
