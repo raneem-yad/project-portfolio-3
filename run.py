@@ -1,8 +1,10 @@
 import time
-from utils import Colors
-import helpers
 import pyfiglet
 from tabulate import tabulate
+from utils.theme import Colors
+import utils.helpers as helpers
+import user.user_func as user
+
 
 
 options = ["1","2","3","4"]
@@ -50,6 +52,8 @@ def handel_option():
     if user_option == '1':
         helpers.clear_terminal()
         print("login window")
+        data = user.get_login_info()
+        print(data)
         # log_in()
     # elif user_option == '2':
     #     clear_terminal()
