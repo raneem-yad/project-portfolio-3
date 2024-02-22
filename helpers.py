@@ -17,6 +17,6 @@ def txt_effect(text_to_print):
     for character in text_to_print:
         sys.stdout.write(character)
         sys.stdout.flush()
-        time.sleep(0.009)
+        time.sleep(0.005)
     
     time.sleep(0.7)
