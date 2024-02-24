@@ -43,7 +43,7 @@ def validate_user_input(useroption,options):
 
 
 def login_extra_options(options):
-    messages = ["Yes","No, I'll try again"]
+    messages = ["Yes","No, I'll try again","Back Home!"]
     # Table headers
     headers = ["Would you like to create an account?", "Press"]
     # create columns 
@@ -52,22 +52,31 @@ def login_extra_options(options):
     print(intro_table.print_table())
     
 
-def handel_extra_options(options): 
+def handel_extra_options(options):  
     while True:
-        user_option = input(OPTION_TEXT)
+        user_option = input(OPTION_TEXT).strip()
         if validate_user_input(user_option,options):
             break
+    
+    # option one : means creating a new account
     if user_option == '1':
         helpers.clear_terminal()
         print("we will create a new account")
         # call create account function 
         # create_account()
-    else:
+    # option two : trying multipiles times to login in 
+    # if tryed more than 3 times it will break out to the home window again
+    elif user_option == '2':
         helpers.clear_terminal()
         print("re-enter your data")
-        # print(f"{Fore.RESET}----------------------------------\n")
-        # print(f"{Style.BRIGHT}Log In")
-        # print_section_border()
+    else: 
+        helpers.clear_terminal()
+        print("backing to home...")   
+        time.sleep(0.8)
+        home() 
+        
+
+     
 
 def login_input():
     helpers.clear_terminal()
@@ -75,17 +84,21 @@ def login_input():
     while True:
         username = input(f"{Colors.MAGENTA}Enter your username :\n {Colors.RESET}")
         password = input(f"{Colors.MAGENTA}Enter your password :\n {Colors.RESET}")
+        # user login failed
         if(not user.login(username,password)):
             print(f"{Colors.RED}\nSorry,username or password are wrong.{Colors.RESET}")
-            options = ['1','2']
+            options = ['1','2','3']
             login_extra_options(options)
-            handel_extra_options(options)
+            handel_extra_options(options) 
+        # user login sucessed
         else:
-            break       
+            print(f"{Colors.MAGENTA} Welcome Back, {username}. Retrieving your Tasks... {Colors.RESET}") 
+            break   
+           
 
 def handel_option(options):
     while True:
-        user_option = input(OPTION_TEXT)
+        user_option = input(OPTION_TEXT).strip()
         if validate_user_input(user_option,options):
             break
     if user_option == '1':
@@ -111,11 +124,14 @@ def handel_option(options):
         print("----------------------------------")
 
 
-def main():
-    print_welcome_messages()
+def home():
     options = ["1","2","3","4"]
     print_option_table(options)
     handel_option(options)
+
+def main():
+    print_welcome_messages()
+    home()
     
 
 main()
