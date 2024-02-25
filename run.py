@@ -2,41 +2,37 @@ import time
 import pyfiglet
 from utils.theme import Colors
 import utils.helpers as helpers
-import user.users_func as user
 import utils.tables as table
-import user.tasks_func as tasks
+import services.users_func as user
+import services.tasks_func as tasks
 
 
 OPTION_TEXT = f"{Colors.MAGENTA}Enter your choice here: \n {Colors.RESET}"
 
 
 def print_welcome_messages():
+    """Prints welcome messages."""
     helpers.txt_effect(Colors.BOLD+Colors.RED +
                        pyfiglet.figlet_format("Welcome to TaskTracker App!") + Colors.RESET)
 
 
 def print_option_table(options):
-    messages = ["Login", "Create Account", "App preview", "Quit App"]
-    # Table headers
+    """Prints the main menu option table."""
+    messages = ["Login", "Create Account", "App Preview", "Quit App"]
     headers = ["How we can Help you", "Press"]
-    # create columns
     columns = table.create_columns(messages, options)
     intro_table = table.TablesDrawing(columns, headers)
     print(intro_table.print_table())
 
 def show_tasks_preview_table():
+    """Prints a preview table of tasks."""
     messages = tasks.DEMO_DATA
-    # Table headers
     headers = tasks.TASKS_FULL_TABLE_HEADERS
-    # create columns
-    # columns = table.create_columns(messages)
     intro_table = table.TablesDrawing(messages, headers)
     print(intro_table.print_table())
 
 def validate_user_input(useroption, options):
-    """
-
-    """
+    """Validates user input."""
     try:
         if useroption not in options:
             raise ValueError(
@@ -45,23 +41,22 @@ def validate_user_input(useroption, options):
                 f"{Colors.BLUE}{options[-1]}{Colors.RESET}. "
                 f"You entered {Colors.RED}{useroption}{Colors.RESET}")
     except ValueError as e:
-        print(" ")
-        print(f"{Colors.RED}Invalid entry:{Colors.RESET} {e}.\n")
+        print(f"{Colors.RED} \n Invalid entry:{Colors.RESET} {e}.\n")
         return False
     return True
 
 
 def login_extra_options(options):
+    """Prints extra login options."""
     messages = ["Yes", "No, I'll try again", "Back Home!"]
-    # Table headers
     headers = ["Would you like to create an account?", "Press"]
-    # create columns
     columns = table.create_columns(messages, options)
     intro_table = table.TablesDrawing(columns, headers)
     print(intro_table.print_table())
 
 
 def handel_extra_options(options):
+    """Handles extra options after login failure."""
     while True:
         user_option = input(OPTION_TEXT).strip()
         if validate_user_input(user_option, options):
@@ -71,10 +66,7 @@ def handel_extra_options(options):
     if user_option == '1':
         helpers.clear_terminal()
         print("we will create a new account")
-        # call create account function
-        # create_account()
-    # option two : trying multipiles times to login in
-    # if tryed more than 3 times it will break out to the home window again
+        create_account_input()
     elif user_option == '2':
         helpers.clear_terminal()
         print("re-enter your data")
@@ -86,6 +78,7 @@ def handel_extra_options(options):
 
 
 def login_input():
+    """Handles user login input."""
     helpers.print_section_title(title='Login! Enter your Creditionals',
                                     is_sleep=False, text_color=Colors.MAGENTA)
     while True:
@@ -106,6 +99,7 @@ def login_input():
 
 
 def create_account_input():
+    """Handles user account creation input."""
     helpers.print_section_title(title='Create New Account!',
                                     is_sleep=False, text_color=Colors.MAGENTA)
     
@@ -142,6 +136,7 @@ def create_account_input():
 
 
 def handel_option(options):
+    """Handles user menu option input."""
     while True:
         user_option = input(OPTION_TEXT).strip()
         if validate_user_input(user_option, options):
@@ -160,15 +155,21 @@ def handel_option(options):
                                     is_sleep=False, text_color=Colors.MAGENTA, emoji='\U0001F609')
 
 
-def home():
+def display_home_menu():
+    """
+    Displays the home menu with options and handles user input.
+    """
     options = ["1", "2", "3", "4"]
     print_option_table(options)
     handel_option(options)
 
 
-def main():
+def run_task_tracker():
+    """
+    Runs the TaskTracker application.
+    """
     print_welcome_messages()
-    home()
+    display_home_menu()
 
 
-main()
+run_task_tracker()
