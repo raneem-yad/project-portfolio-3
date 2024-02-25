@@ -2,8 +2,9 @@ import time
 import pyfiglet
 from utils.theme import Colors
 import utils.helpers as helpers
-import user.user_func as user
+import user.users_func as user
 import utils.tables as table
+import user.tasks_func as tasks
 
 
 OPTION_TEXT = f"{Colors.MAGENTA}Enter your choice here: \n {Colors.RESET}"
@@ -23,6 +24,14 @@ def print_option_table(options):
     intro_table = table.TablesDrawing(columns, headers)
     print(intro_table.print_table())
 
+def show_tasks_preview_table():
+    messages = tasks.DEMO_DATA
+    # Table headers
+    headers = tasks.TASKS_FULL_TABLE_HEADERS
+    # create columns
+    # columns = table.create_columns(messages)
+    intro_table = table.TablesDrawing(messages, headers)
+    print(intro_table.print_table())
 
 def validate_user_input(useroption, options):
     """
@@ -142,11 +151,8 @@ def handel_option(options):
 
     elif user_option == '2':
         create_account_input()
-        # clear_terminal()
-        # get_username = create_account()
-        # set_up_new_budget(get_username)
-    # elif user_option == '3':
-    #     delete_account()
+    elif user_option == '3':
+        show_tasks_preview_table()
     else:
         helpers.print_section_title(
             title='Quitting app... ', is_sleep=True, text_color=Colors.RED)

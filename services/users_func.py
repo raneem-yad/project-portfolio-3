@@ -4,7 +4,7 @@ import hashlib
 
 SHEET_NAME = 'users'
 connected_sheet = conn.get_sheet()
-sales_sheet = connected_sheet.worksheet(SHEET_NAME)
+users_sheet = connected_sheet.worksheet(SHEET_NAME)
 
 ID_COLUMN_INDEX = 1
 USERNAME_COLUMN_INDEX = 2
@@ -19,7 +19,7 @@ def get_all_users():
     Returns:
         list: A list containing all user data.
     """
-    return sales_sheet.get_all_values()
+    return users_sheet.get_all_values()
 
 
 def get_all_emails():
@@ -29,7 +29,7 @@ def get_all_emails():
     Returns:
         list: A list containing all email addresses.
     """
-    return sales_sheet.col_values(EMAIL_COLUMN_INDEX)
+    return users_sheet.col_values(EMAIL_COLUMN_INDEX)
 
 
 def get_all_usernames():
@@ -39,7 +39,7 @@ def get_all_usernames():
     Returns:
         list: A list containing all usernames.
     """
-    return sales_sheet.col_values(USERNAME_COLUMN_INDEX)
+    return users_sheet.col_values(USERNAME_COLUMN_INDEX)
 
 
 def get_last_id():
@@ -49,7 +49,7 @@ def get_last_id():
     Returns:
         str: The last ID value.
     """
-    return sales_sheet.col_values(ID_COLUMN_INDEX)[-1]
+    return users_sheet.col_values(ID_COLUMN_INDEX)[-1]
 
 
 def get_login_info():
@@ -60,8 +60,8 @@ def get_login_info():
         Tuple: A typle containing two lists, the first list contains usernames and the second list contains passwords.
     """
 
-    usernames_column = sales_sheet.col_values(USERNAME_COLUMN_INDEX)
-    passwords_column = sales_sheet.col_values(PASSWORD_COLUMN_INDEX)
+    usernames_column = users_sheet.col_values(USERNAME_COLUMN_INDEX)
+    passwords_column = users_sheet.col_values(PASSWORD_COLUMN_INDEX)
     return usernames_column, passwords_column
 
 
