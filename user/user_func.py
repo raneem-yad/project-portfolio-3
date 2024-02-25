@@ -1,5 +1,6 @@
 import re
 import utils.connecting as conn
+import hashlib
 
 SHEET_NAME = 'users'
 connected_sheet = conn.get_sheet()
@@ -79,26 +80,12 @@ def login(username, password):
 
     if username in usernames:
         index = usernames.index(username)
-        if passwords[index] == password:
+        if passwords[index] == hash_password(password):
             return True
         else:
             return False
     else:
         return False
-
-
-def is_valid_email(email):
-    """
-    Checks if the provided email address is valid and not already in use.
-
-    Args:
-        email (str): The email address to validate.
-
-    Returns:
-        bool: True if the email is valid and not already in use, False otherwise.
-    """
-    regex_email = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-    return re.fullmatch(regex_email, email) and email not in get_all_emails()
 
 
 def username_exists(username):
@@ -126,5 +113,39 @@ def add_new_user(fullname, username, email, password):
     """
     last_id = int(get_last_id())
     new_user_id = last_id + 1
-    new_user = [new_user_id, username, fullname, email, password]
+    secure_password = hash_password(password)
+    new_user = [new_user_id, username, fullname, email, secure_password]
     conn.update_worksheet(new_user, SHEET_NAME)
+
+
+def is_valid_email(email):
+    """
+    Checks if the provided email address is valid and not already in use.
+
+    Args:
+        email (str): The email address to validate.
+
+    Returns:
+        bool: True if the email is valid and not already in use, False otherwise.
+    """
+    regex_email = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+    return re.fullmatch(regex_email, email) and email not in get_all_emails()
+
+
+def hash_password(password):
+    """
+    Hashes the provided password using SHA-256 algorithm.
+
+    Args:
+        password (str): The password to be hashed.
+
+    Returns:
+        str: The hashed password.
+    """
+    try:
+        password_bytes = password.encode('utf-8')
+        hash_object = hashlib.sha256(password_bytes)
+        return hash_object.hexdigest()
+    except Exception as e:
+        print(f"Error hashing password: {e}")
+        return None

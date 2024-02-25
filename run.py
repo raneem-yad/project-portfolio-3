@@ -113,7 +113,7 @@ def create_account_input():
             print(helpers.sentence("Your username can't have spaces. Please try again.\n",txt_color=Colors.RED))
             continue
 
-        if user.username_exist(username):
+        if user.username_exists(username):
             print(helpers.sentence("Username already exists.\n",txt_color=Colors.RED))
             if input(helpers.sentence("Would you like to login instead? (Enter 'yes' or 'no'): ")).lower() == 'yes':
                 login_input()
