@@ -42,6 +42,16 @@ def get_all_usernames():
     return users_sheet.col_values(USERNAME_COLUMN_INDEX)
 
 
+def get_all_id():
+    """
+    Retrieves all ID from the spreadsheet.
+
+    Returns:
+        List: The List of ID.
+    """
+    return users_sheet.col_values(ID_COLUMN_INDEX)
+
+
 def get_last_id():
     """
     Retrieves the last ID from the spreadsheet.
@@ -117,6 +127,12 @@ def add_new_user(fullname, username, email, password):
     new_user = [new_user_id, username, fullname, email, secure_password]
     conn.update_worksheet(new_user, SHEET_NAME)
 
+
+def get_user_id_per_username(username):
+    index = get_all_usernames().index(username)
+    id = get_all_id()[index]
+    return id
+    
 
 def is_valid_email(email):
     """
