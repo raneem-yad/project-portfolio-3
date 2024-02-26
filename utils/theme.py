@@ -11,12 +11,3 @@ class Colors:
     UNDERLINE = '\033[4m'
     RESET = "\u001b[0m"
     def rgb(r, g, b): return f"\u001b[38;2;{r};{g};{b}m"
-
-
-# class Message:
-#     def __init__(self, msg, command):
-#         self.msg = msg
-#         self.command = command
-
-#     def get_message(self):
-#         return [self.msg, self.command]
