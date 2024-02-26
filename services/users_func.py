@@ -126,13 +126,22 @@ def add_new_user(fullname, username, email, password):
 
 
 def get_user_id_per_username(username):
+    """
+    Retrieves the user ID corresponding to the given username.
+
+    Args:
+    - username (str): The username for which to retrieve the user ID.
+
+    Returns:
+    - int or None: The user ID if the username exists, None otherwise.
+    """
     usernames = get_all_usernames()
     if username in usernames:
         index = usernames.index(username)
         id = get_all_id()[index]
         return id
-    else : 
-        print("username doesn't exist")
+    else:
+        raise ValueError("Username doesn't exist.")
     
 
 def is_valid_email(email):
