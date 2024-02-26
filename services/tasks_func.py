@@ -119,3 +119,13 @@ def del_task(task_name):
     cell = tasks_sheet.find(task_name)
     # choice the status column 
     tasks_sheet.delete_rows(cell.row)
+    
+    
+def validate_date(date_text):
+    try:
+        # Parse the input date string using strptime() method
+        datetime.strptime(date_text, '%Y-%m-%d')
+        return True
+    except ValueError:
+        # If the parsing fails, return False
+        return False

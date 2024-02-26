@@ -168,7 +168,30 @@ def delete_task(username):
     print(helpers.sentence(
         f"Task has been updated! \n", txt_color=Colors.YELLOW))
     show_tasks_section(username)
-    
+
+
+
+def show_tasks_per_specific_date(username):
+    while True:
+        task_due_date = input(helpers.sentence(
+            'Enter a task due date (YYYY-MM-DD): \n'))
+        
+        if not tasks.validate_date(task_due_date):
+            print(helpers.sentence(
+                "Invalid input! Make Sure the date is in Correct Form! \n", txt_color=Colors.RED))
+            continue
+        else:
+            break   
+    # calling the function and showing the tasks function 
+    print(f"Selected date is {task_due_date}")
+    helpers.print_section_title(title=f'Selected date is{task_due_date}')
+    show_tasks_per_date(username, task_due_date)
+    # print(helpers.sentence(f"deleting Task number {task_index}...\n", txt_color=Colors.YELLOW))
+    # tasks.del_task(task_name = user_tasks[task_index][0])
+    # time.sleep(SLEEP_TIME)
+    # print(helpers.sentence(
+    #     f"Task has been updated! \n", txt_color=Colors.YELLOW))
+    # show_tasks_section(username)
 
 def handel_task_option(options, username):
     options = ["1", "2","3","4","5"]
@@ -179,7 +202,7 @@ def handel_task_option(options, username):
         if validate_user_input(user_option, options):
             break
     if user_option == '1':
-        print("Showing tasks for different date")
+        show_tasks_per_specific_date(username)
 
     elif user_option == '2':
         create_new_task(username)
@@ -199,8 +222,11 @@ def show_tasks_section(username):
     today_date = datetime.now().date()
     # demo_date = '2024-02-26'
     print(f"today date is {today_date}")
+    show_tasks_per_date(username, today_date)
+    
+def show_tasks_per_date(username, date):
     global user_tasks
-    user_tasks = tasks.get_tasks_per_date(username, today_date)
+    user_tasks = tasks.get_tasks_per_date(username, date)
     # print(tabulate({"Today Tasks": user_tasks}, headers="keys"))
     show_today_tasks_table(user_tasks)
     # show tasks options
