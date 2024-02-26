@@ -11,6 +11,7 @@ import services.tasks_func as tasks
 
 OPTION_TEXT = f"{Colors.MAGENTA}Enter your choice here: \n {Colors.RESET}"
 SLEEP_TIME = 0.8
+user_tasks =[]
 
 def print_welcome_messages():
     """Prints welcome messages."""
@@ -40,13 +41,13 @@ def show_today_tasks_table(tasks):
     messages = tasks
     headers = [f"{Colors.YELLOW}Today Tasks{Colors.RESET}",
                f"{Colors.YELLOW}Priority{Colors.RESET}", f"{Colors.YELLOW}Is Done?{Colors.RESET}"]
-    intro_table = table.TablesDrawing(messages, headers)
+    intro_table = table.TablesDrawing(messages, headers,indexed=True)
     print(intro_table.print_table())
     
 
 def print_task_option_table(options):
     """Prints the Tasks options table."""
-    messages = ["Show Tasks for another date", "Add new Task","Back Home"]
+    messages = ["Show Tasks for another date", "Add new Task","Make Task as Done","Delete Task","Back Home"]
     headers = ["Options", "Press"]
     columns = table.create_columns(messages, options)
     intro_table = table.TablesDrawing(columns, headers)
@@ -102,8 +103,58 @@ def handel_extra_options(options):
     else:
         back_home()
 
+def create_new_task(username):
+    """Handles user account creation input."""
+    helpers.print_section_title(title='Create New Task!',
+                                is_sleep=False, text_color=Colors.MAGENTA)
 
-def handel_task_option(options):
+    while True:
+        task = input(helpers.sentence(
+            'Name your Task!\n')).capitalize()
+        task_details = input(helpers.sentence("Enter more details if there is no more details Press Enter!:\n"))
+
+        priority = input(helpers.sentence(
+            'What the Task Priority from 1-3, 1 is the Highest!\n'))
+        if priority not in ["1","2","3"]:
+            print(helpers.sentence(
+                "Invalid input! Type 1 or 2 or 3! \n", txt_color=Colors.RED))
+            continue
+
+        break
+    print(helpers.sentence(f"Adding New Task...\n", txt_color=Colors.YELLOW))
+    tasks.add_new_task(task=task, details=task_details,priority=priority, username = username)
+    print(helpers.sentence(
+        f"New user has been added! \n", txt_color=Colors.YELLOW))
+    show_tasks_section()
+
+def update_task_status(username):
+    while True:
+        task_index = int(input(helpers.sentence(
+            'Which Task you want to change! Enter Task Number\n')).strip())
+        
+        if task_index not in list(range(len(user_tasks))):
+            print(helpers.sentence(
+                "Invalid input! Make Sure Than Task Number exist! \n", txt_color=Colors.RED))
+            # continue
+        elif (user_tasks[task_index][2]).strip() == 'Yes': 
+            print(helpers.sentence(
+                "Invalid Task! You choosed a task with Done Status! \n", txt_color=Colors.RED))
+            continue
+        else:
+            break     
+        
+    print(helpers.sentence(f"Updating Task Status number {task_index}...\n", txt_color=Colors.YELLOW))
+    tasks.update_status(task_name = user_tasks[task_index][0])
+    time.sleep(SLEEP_TIME)
+    print(helpers.sentence(
+        f"Task has been updated! \n", txt_color=Colors.YELLOW))
+    show_tasks_section(username)
+    
+    
+
+def handel_task_option(options, username):
+    options = ["1", "2","3","4","5"]
+    
     """Handles user menu option input."""
     while True:
         user_option = input(OPTION_TEXT).strip()
@@ -113,7 +164,14 @@ def handel_task_option(options):
         print("Showing tasks for different date")
 
     elif user_option == '2':
-        print("adding new tasks")
+        create_new_task(username)
+    
+    elif user_option == '3':
+        update_task_status(username)
+        
+    elif user_option == '4':
+        delete_task(username)
+        
     else:
         back_home()
 
@@ -123,13 +181,14 @@ def show_tasks_section(username):
     today_date = datetime.now().date()
     # demo_date = '2024-02-26'
     print(f"today date is {today_date}")
+    global user_tasks
     user_tasks = tasks.get_tasks_per_date(username, today_date)
     # print(tabulate({"Today Tasks": user_tasks}, headers="keys"))
     show_today_tasks_table(user_tasks)
     # show tasks options
-    options = ["1", "2","3"]
+    options = ["1", "2","3","4","5"]
     print_task_option_table(options)
-    handel_task_option(options) 
+    handel_task_option(options ,username) 
 
 
 def login_input():
@@ -146,10 +205,11 @@ def login_input():
             handel_extra_options(options)
         # user login sucessed
         else:
-            print(
-                f"{Colors.MAGENTA} Welcome Back, {username}. Retrieving your Tasks... {Colors.RESET}")
-            show_tasks_section(username)
             break
+    print(
+        f"{Colors.MAGENTA} Welcome Back, {username}. Retrieving your Tasks... {Colors.RESET}")
+    show_tasks_section(username)
+            
 
 
 def create_account_input():
