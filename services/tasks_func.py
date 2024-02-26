@@ -112,3 +112,10 @@ def update_status(task_name):
     updated_task_col_poition = STATUS_COLUMN_INDEX
     # update the value 
     tasks_sheet.update_cell(updated_task_row_poition, updated_task_col_poition, '1')
+    
+    
+def del_task(task_name):
+    # finding the task in table (get the row)
+    cell = tasks_sheet.find(task_name)
+    # choice the status column 
+    tasks_sheet.delete_rows(cell.row)

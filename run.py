@@ -125,7 +125,7 @@ def create_new_task(username):
     tasks.add_new_task(task=task, details=task_details,priority=priority, username = username)
     print(helpers.sentence(
         f"New user has been added! \n", txt_color=Colors.YELLOW))
-    show_tasks_section()
+    show_tasks_section(username)
 
 def update_task_status(username):
     while True:
@@ -150,6 +150,24 @@ def update_task_status(username):
         f"Task has been updated! \n", txt_color=Colors.YELLOW))
     show_tasks_section(username)
     
+def delete_task(username):
+    while True:
+        task_index = int(input(helpers.sentence(
+            'Which Task you want to Delete it!\n')).strip())
+        
+        if task_index not in list(range(len(user_tasks))):
+            print(helpers.sentence(
+                "Invalid input! Make Sure Than Task Number exist! \n", txt_color=Colors.RED))
+            continue
+        else:
+            break     
+        
+    print(helpers.sentence(f"deleting Task number {task_index}...\n", txt_color=Colors.YELLOW))
+    tasks.del_task(task_name = user_tasks[task_index][0])
+    time.sleep(SLEEP_TIME)
+    print(helpers.sentence(
+        f"Task has been updated! \n", txt_color=Colors.YELLOW))
+    show_tasks_section(username)
     
 
 def handel_task_option(options, username):
