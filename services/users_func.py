@@ -90,13 +90,10 @@ def login(username, password):
 
     if username in usernames:
         index = usernames.index(username)
-        if passwords[index] == hash_password(password):
-            return True
-        else:
-            return False
-    else:
-        return False
-
+        return passwords[index] == hash_password(password)
+        
+    return False
+    
 
 def username_exists(username):
     """

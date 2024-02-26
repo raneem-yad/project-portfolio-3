@@ -14,11 +14,11 @@ SHEET = GSPREAD_CLIENT.open('TaskTrack')
 def get_sheet():
     return SHEET
 
-def update_worksheet(data, worksheet):
-    """
-    Receives a list of integers to be inserted into a worksheet
-    Update the relevant worksheet with the data provided
-    """
-    worksheet_to_update = SHEET.worksheet(worksheet)
-    worksheet_to_update.append_row(data)
+# def update_worksheet(data, worksheet):
+#     """
+#     Receives a list of integers to be inserted into a worksheet
+#     Update the relevant worksheet with the data provided
+#     """
+#     worksheet_to_update = SHEET.worksheet(worksheet)
+#     worksheet_to_update.append_row(data)
     
