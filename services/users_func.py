@@ -129,9 +129,13 @@ def add_new_user(fullname, username, email, password):
 
 
 def get_user_id_per_username(username):
-    index = get_all_usernames().index(username)
-    id = get_all_id()[index]
-    return id
+    usernames = get_all_usernames()
+    if username in usernames:
+        index = usernames.index(username)
+        id = get_all_id()[index]
+        return id
+    else : 
+        print("username doesn't exist")
     
 
 def is_valid_email(email):
