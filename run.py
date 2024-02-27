@@ -268,7 +268,7 @@ def show_tasks_per_specific_date(username):
 
         if not tasks.validate_date(task_due_date):
             print(helpers.sentence(
-                "Invalid input! Make Sure the date is in Correct Form! \n", txt_color=Colors.RED))
+                "Invalid date format. Please enter a date in the format 'YYYY-MM-DD'.\n", txt_color=Colors.RED))
             continue
         else:
             break
@@ -369,22 +369,26 @@ def create_account_input():
     helpers.print_section_title(title='Create New Account!',
                                 is_sleep=False, text_color=Colors.MAGENTA)
 
-    while True:
-        fullname = input(helpers.sentence(
+    fullname = input(helpers.sentence(
             'Enter your Full name!\n')).capitalize()
+    while True:
         email = input(helpers.sentence("Enter your Email address!:\n"))
 
         if not user.is_valid_email(email):
             print(helpers.sentence(
                 "Invalid or existing email address\n", txt_color=Colors.RED))
             continue
-
+        else:
+            break
+    
+    while True:
         username = input(helpers.sentence(
             "Now enter a username. Make sure it does not have any spaces:\n"))
         if " " in username:
             print(helpers.sentence(
                 "Your username can't have spaces. Please try again.\n", txt_color=Colors.RED))
             continue
+        
 
         if user.username_exists(username):
             print(helpers.sentence(
@@ -392,22 +396,28 @@ def create_account_input():
             if input(helpers.sentence("Would you like to login instead? (Enter 'yes' or 'no'): ")).lower() == 'yes':
                 login_input()
             continue
+        else:
+            break
 
-        while True:
-            password = input(helpers.sentence("Enter your Password: \n"))
-            confirm_password = input(
-                helpers.sentence("Re-enter your Password: \n"))
-            if password == confirm_password:
-                break
-            else:
-                print(helpers.sentence(
-                    "password and confirmPassword don't match. Please try again.\n", txt_color=Colors.RED))
+    while True:
+        password = input(helpers.sentence("Enter your Password: \n"))
+        confirm_password = input(
+            helpers.sentence("Re-enter your Password: \n"))
+        if password == confirm_password:
+            break
+        else:
+            print(helpers.sentence(
+                "password and confirmPassword don't match. Please try again.\n", txt_color=Colors.RED))
 
-        print(helpers.sentence(f"Creating New Account...\n", txt_color=Colors.YELLOW))
-        user.add_new_user(fullname=fullname, username=username,
-                          email=email, password=password)
-        print(helpers.sentence(
-            f"New user has been added! \n", txt_color=Colors.YELLOW))
+    print(helpers.sentence(f"Creating New Account...\n", txt_color=Colors.YELLOW))
+    user.add_new_user(fullname=fullname, username=username,
+                        email=email, password=password)
+    print(helpers.sentence(
+        f"New user has been added! \n", txt_color=Colors.YELLOW))
+    time.sleep(SLEEP_TIME)
+    show_tasks_section(username)
+    
+    
 
 
 def login_input():
@@ -438,6 +448,20 @@ def login_input():
         f"{Colors.MAGENTA} Welcome Back, {username}. Retrieving your Tasks... {Colors.RESET}")
     show_tasks_section(username)
 
+def preview_table():
+    show_tasks_preview_table()
+    while True:
+        is_back_home = input(helpers.sentence(txt="Enter 'yes' to Back Home :\n")).lower()
+        
+        if (is_back_home == 'yes'):
+            break
+        # user login sucessed
+        else:
+            print(helpers.sentence(
+                txt="\nInvalid Input. Try again!", txt_color=Colors.RED))
+    back_home()
+
+    
 
 def handel_option(options):
     """
@@ -459,7 +483,7 @@ def handel_option(options):
     elif user_option == '2':
         create_account_input()
     elif user_option == '3':
-        show_tasks_preview_table()
+        preview_table()
     else:
         helpers.print_section_title(
             title='Quitting app... ', is_sleep=True, text_color=Colors.RED)
