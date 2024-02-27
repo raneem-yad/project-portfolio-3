@@ -6,20 +6,58 @@ import utils.helpers as helpers
 
 
 DEMO_DATA = [
-    [1, 'Prepare report', '2024-02-20','High Priority', helpers.sentence(txt = "NO", txt_color=Colors.RED)],
-    [2, 'Meeting',  '2024-02-21','Mid Priority', helpers.sentence(txt = "Yes", txt_color=Colors.GREEN)],
-    [3, 'Presentation','2024-02-25','Low Priority', helpers.sentence(txt = "NO", txt_color=Colors.RED)],
-    [4, 'Code review',  '2024-02-23','High Priority', helpers.sentence(txt = "Yes", txt_color=Colors.GREEN)],
-    [5, 'Email follow-up',  '2024-02-22','Mid Priority', helpers.sentence(txt = "NO", txt_color=Colors.RED)],
-    [6, 'Training session',  '2024-02-24','High Priority', helpers.sentence(txt = "Yes", txt_color=Colors.GREEN)]
+    [
+        1,
+        "Prepare report",
+        "2024-02-20",
+        "High Priority",
+        helpers.sentence(txt="NO", txt_color=Colors.RED),
+    ],
+    [
+        2,
+        "Meeting",
+        "2024-02-21",
+        "Mid Priority",
+        helpers.sentence(txt="Yes", txt_color=Colors.GREEN),
+    ],
+    [
+        3,
+        "Presentation",
+        "2024-02-25",
+        "Low Priority",
+        helpers.sentence(txt="NO", txt_color=Colors.RED),
+    ],
+    [
+        4,
+        "Code review",
+        "2024-02-23",
+        "High Priority",
+        helpers.sentence(txt="Yes", txt_color=Colors.GREEN),
+    ],
+    [
+        5,
+        "Email follow-up",
+        "2024-02-22",
+        "Mid Priority",
+        helpers.sentence(txt="NO", txt_color=Colors.RED),
+    ],
+    [
+        6,
+        "Training session",
+        "2024-02-24",
+        "High Priority",
+        helpers.sentence(txt="Yes", txt_color=Colors.GREEN),
+    ],
 ]
 
-TASKS_FULL_TABLE_HEADERS = [" ", helpers.sentence(txt = "Tasks", txt_color=Colors.YELLOW),
-                            helpers.sentence(txt = "Due Date", txt_color=Colors.YELLOW),
-                            helpers.sentence(txt = "Priority", txt_color=Colors.YELLOW),
-                            helpers.sentence(txt = "Status", txt_color=Colors.YELLOW),
-                            ]
-SHEET_NAME = 'tasks'
+TASKS_FULL_TABLE_HEADERS = [
+    " ",
+    helpers.sentence(txt="Tasks", txt_color=Colors.YELLOW),
+    helpers.sentence(txt="Due Date", txt_color=Colors.YELLOW),
+    helpers.sentence(txt="Priority", txt_color=Colors.YELLOW),
+    helpers.sentence(txt="Status", txt_color=Colors.YELLOW),
+]
+SHEET_NAME = "tasks"
 connected_sheet = conn.get_sheet()
 tasks_sheet = connected_sheet.worksheet(SHEET_NAME)
 
@@ -91,9 +129,8 @@ def show_priority_label(priority):
     Returns:
     - str: The human-readable label for the priority level.
     """
-    priority_labels = {'1': 'High Priority',
-                       '2': 'Mid Priority', '3': 'Low Priority'}
-    return priority_labels.get(priority, 'Invalid Priority')
+    priority_labels = {"1": "High Priority", "2": "Mid Priority", "3": "Low Priority"}
+    return priority_labels.get(priority, "Invalid Priority")
 
 
 def show_status_label(status):
@@ -106,9 +143,13 @@ def show_status_label(status):
     Returns:
     - str: The human-readable label for the status with color formatting.
     """
-    status_labels = {'1': helpers.sentence(txt = "Yes", txt_color=Colors.GREEN),
-                     '0': helpers.sentence(txt = "No", txt_color=Colors.RED)}
-    return status_labels.get(status, helpers.sentence(txt = "Invalid Status", txt_color=Colors.RED))
+    status_labels = {
+        "1": helpers.sentence(txt="Yes", txt_color=Colors.GREEN),
+        "0": helpers.sentence(txt="No", txt_color=Colors.RED),
+    }
+    return status_labels.get(
+        status, helpers.sentence(txt="Invalid Status", txt_color=Colors.RED)
+    )
 
 
 def get_last_id():
@@ -159,8 +200,13 @@ def get_tasks_per_date(username, date):
     tasks_data = []
     for i in range(len(ids)):
         if ids[i] == user_id and due_dates[i] == str(date):
-            tasks_data.append([tasks[i], show_priority_label(
-                priorities[i]), show_status_label(status[i])])
+            tasks_data.append(
+                [
+                    tasks[i],
+                    show_priority_label(priorities[i]),
+                    show_status_label(status[i]),
+                ]
+            )
 
     if not tasks_data:
         print("No tasks found for the provided date.")
@@ -191,10 +237,9 @@ def add_new_task(task, details, priority, username):
 
     new_task_id = last_id + 1
     today_date = str(datetime.now().date())
-    status = '0'
+    status = "0"
 
-    new_task = [new_task_id, user_id, task,
-                details, priority, today_date, status]
+    new_task = [new_task_id, user_id, task, details, priority, today_date, status]
     conn.update_worksheet(new_task, SHEET_NAME)
 
 
@@ -214,8 +259,7 @@ def update_status(task_name):
 
     updated_task_row_position = cell.row
     updated_task_col_position = STATUS_COLUMN_INDEX
-    tasks_sheet.update_cell(updated_task_row_position,
-                            updated_task_col_position, '1')
+    tasks_sheet.update_cell(updated_task_row_position, updated_task_col_position, "1")
 
 
 def del_task(task_name):
@@ -234,7 +278,8 @@ def del_task(task_name):
 
     tasks_sheet.delete_rows(task_cell.row)
 
-def validate_date(date_str):   
+
+def validate_date(date_str):
     """
     Validate if the input string represents a valid date in the format 'YYYY-MM-DD'.
     Args:
@@ -243,29 +288,7 @@ def validate_date(date_str):
     - bool: True if the input string is a valid date, False otherwise.
     """
     try:
-        datetime.strptime(date_str, '%Y-%m-%d')
+        datetime.strptime(date_str, "%Y-%m-%d")
         return True
     except ValueError:
         return False
-
-# def validate_date(date_str):
-#     """
-#     Validate if the input string represents a valid date in the format 'YYYY-MM-DD'.
-
-#     Args:
-#     - date_str (str): The input string to validate.
-
-#     Returns:
-#     - bool: True if the input string is a valid date, False otherwise.
-
-#     Raises:
-#     - ValueError: If the input string does not represent a valid date.
-#     """
-#     try:
-#         # Parse the input date string using strptime() method
-#         datetime.strptime(date_str, '%Y-%m-%d')
-#         return True
-#     except ValueError:
-#         # If the parsing fails, raise a ValueError
-#         raise ValueError(
-#             "Invalid date format. Please enter a date in the format 'YYYY-MM-DD'.")

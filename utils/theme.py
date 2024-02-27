@@ -7,7 +7,9 @@ class Colors:
     MAGENTA = "\u001b[35m"
     CYAN = "\u001b[36m"
     WHITE = "\u001b[37m"
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+    BOLD = "\033[1m"
+    UNDERLINE = "\033[4m"
     RESET = "\u001b[0m"
-    def rgb(r, g, b): return f"\u001b[38;2;{r};{g};{b}m"
+
+    def rgb(r, g, b):
+        return f"\u001b[38;2;{r};{g};{b}m"

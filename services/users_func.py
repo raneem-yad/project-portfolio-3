@@ -2,7 +2,7 @@ import re
 import utils.connecting as conn
 import hashlib
 
-SHEET_NAME = 'users'
+SHEET_NAME = "users"
 connected_sheet = conn.get_sheet()
 users_sheet = connected_sheet.worksheet(SHEET_NAME)
 
@@ -91,9 +91,9 @@ def login(username, password):
     if username in usernames:
         index = usernames.index(username)
         return passwords[index] == hash_password(password)
-        
+
     return False
-    
+
 
 def username_exists(username):
     """
@@ -142,7 +142,7 @@ def get_user_id_per_username(username):
         return id
     else:
         raise ValueError("Username doesn't exist.")
-    
+
 
 def is_valid_email(email):
     """
@@ -154,7 +154,7 @@ def is_valid_email(email):
     Returns:
         bool: True if the email is valid and not already in use, False otherwise.
     """
-    regex_email = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+    regex_email = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
     return re.fullmatch(regex_email, email) and email not in get_all_emails()
 
 
@@ -169,7 +169,7 @@ def hash_password(password):
         str: The hashed password.
     """
     try:
-        password_bytes = password.encode('utf-8')
+        password_bytes = password.encode("utf-8")
         hash_object = hashlib.sha256(password_bytes)
         return hash_object.hexdigest()
     except Exception as e:

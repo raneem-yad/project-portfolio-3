@@ -33,8 +33,11 @@ def show_today_tasks_table(tasks):
     - tasks (list): A list of tasks for the current day.
     """
     messages = tasks
-    headers = [f"{Colors.YELLOW}Today Tasks{Colors.RESET}",
-               f"{Colors.YELLOW}Priority{Colors.RESET}", f"{Colors.YELLOW}Is Done?{Colors.RESET}"]
+    headers = [
+        f"{Colors.YELLOW}Today Tasks{Colors.RESET}",
+        f"{Colors.YELLOW}Priority{Colors.RESET}",
+        f"{Colors.YELLOW}Is Done?{Colors.RESET}",
+    ]
     intro_table = table.TablesDrawing(messages, headers, indexed=True)
     print(intro_table.print_table())
 
@@ -42,12 +45,17 @@ def show_today_tasks_table(tasks):
 def print_task_option_table(options):
     """
     Prints the Tasks options table.
-    
+
     Args:
     - options (list): A list of valid menu options.
     """
-    messages = ["Show Tasks for another date", "Add new Task",
-                "Make Task as Done", "Delete Task", "Back Home"]
+    messages = [
+        "Show Tasks for another date",
+        "Add new Task",
+        "Make Task as Done",
+        "Delete Task",
+        "Back Home",
+    ]
     headers = ["Options", "Press"]
     columns = table.create_columns(messages, options)
     intro_table = table.TablesDrawing(columns, headers)
@@ -72,7 +80,7 @@ def back_home():
 def login_extra_options(options):
     """
     Prints extra login options.
-    
+
     Args:
     - options (list): A list of valid menu options.
     """
@@ -105,7 +113,8 @@ def validate_user_input(useroption, options):
                 f"You must enter a number between "
                 f"{Colors.BLUE}{options[0]}{Colors.RESET} and "
                 f"{Colors.BLUE}{options[-1]}{Colors.RESET}. "
-                f"You entered {Colors.RED}{useroption}{Colors.RESET}")
+                f"You entered {Colors.RED}{useroption}{Colors.RESET}"
+            )
     except ValueError as e:
         print(f"{Colors.RED} \n Invalid entry:{Colors.RESET} {e}.\n")
         return False
@@ -132,11 +141,11 @@ def handel_extra_options(options):
             break
 
     # option one : means creating a new account
-    if user_option == '1':
+    if user_option == "1":
         helpers.clear_terminal()
         print("we will create a new account")
         create_account_input()
-    elif user_option == '2':
+    elif user_option == "2":
         helpers.clear_terminal()
         print("re-enter your data")
     else:
@@ -155,28 +164,35 @@ def create_new_task(username):
     Args:
     - username (str): The username of the user creating the task.
     """
-    helpers.print_section_title(title='Create New Task!',
-                                is_sleep=False, text_color=Colors.MAGENTA)
+    helpers.print_section_title(
+        title="Create New Task!", is_sleep=False, text_color=Colors.MAGENTA
+    )
 
     while True:
-        task = input(helpers.sentence(
-            'Name your Task!\n')).capitalize()
-        task_details = input(helpers.sentence(
-            "Enter more details if there is no more details Press Enter!:\n"))
+        task = input(helpers.sentence("Name your Task!\n")).capitalize()
+        task_details = input(
+            helpers.sentence(
+                "Enter more details if there is no more details Press Enter!:\n"
+            )
+        )
 
-        priority = input(helpers.sentence(
-            'What the Task Priority from 1-3, 1 is the Highest!\n'))
+        priority = input(
+            helpers.sentence("What the Task Priority from 1-3, 1 is the Highest!\n")
+        )
         if priority not in ["1", "2", "3"]:
-            print(helpers.sentence(
-                "Invalid input! Type 1 or 2 or 3! \n", txt_color=Colors.RED))
+            print(
+                helpers.sentence(
+                    "Invalid input! Type 1 or 2 or 3! \n", txt_color=Colors.RED
+                )
+            )
             continue
 
         break
     print(helpers.sentence(f"Adding New Task...\n", txt_color=Colors.YELLOW))
-    tasks.add_new_task(task=task, details=task_details,
-                       priority=priority, username=username)
-    print(helpers.sentence(
-        f"New user has been added! \n", txt_color=Colors.YELLOW))
+    tasks.add_new_task(
+        task=task, details=task_details, priority=priority, username=username
+    )
+    print(helpers.sentence(f"New user has been added! \n", txt_color=Colors.YELLOW))
     show_tasks_section(username)
 
 
@@ -194,26 +210,39 @@ def update_task_status(username):
     - username (str): The username of the user whose task status is being updated.
     """
     while True:
-        task_index = int(input(helpers.sentence(
-            'Which Task you want to change! Enter Task Number\n')).strip())
+        task_index = int(
+            input(
+                helpers.sentence("Which Task you want to change! Enter Task Number\n")
+            ).strip()
+        )
 
         if task_index not in list(range(len(user_tasks))):
-            print(helpers.sentence(
-                "Invalid input! Make Sure Than Task Number exist! \n", txt_color=Colors.RED))
+            print(
+                helpers.sentence(
+                    "Invalid input! Make Sure Than Task Number exist! \n",
+                    txt_color=Colors.RED,
+                )
+            )
             # continue
-        elif (user_tasks[task_index][2]).strip() == 'Yes':
-            print(helpers.sentence(
-                "Invalid Task! You choosed a task with Done Status! \n", txt_color=Colors.RED))
+        elif (user_tasks[task_index][2]).strip() == "Yes":
+            print(
+                helpers.sentence(
+                    "Invalid Task! You choosed a task with Done Status! \n",
+                    txt_color=Colors.RED,
+                )
+            )
             continue
         else:
             break
 
-    print(helpers.sentence(
-        f"Updating Task Status number {task_index}...\n", txt_color=Colors.YELLOW))
+    print(
+        helpers.sentence(
+            f"Updating Task Status number {task_index}...\n", txt_color=Colors.YELLOW
+        )
+    )
     tasks.update_status(task_name=user_tasks[task_index][0])
     time.sleep(SLEEP_TIME)
-    print(helpers.sentence(
-        f"Task has been updated! \n", txt_color=Colors.YELLOW))
+    print(helpers.sentence(f"Task has been updated! \n", txt_color=Colors.YELLOW))
     show_tasks_section(username)
 
 
@@ -231,22 +260,29 @@ def delete_task(username):
     - username (str): The username of the user whose task is being deleted.
     """
     while True:
-        task_index = int(input(helpers.sentence(
-            'Which Task you want to Delete it!\n')).strip())
+        task_index = int(
+            input(helpers.sentence("Which Task you want to Delete it!\n")).strip()
+        )
 
         if task_index not in list(range(len(user_tasks))):
-            print(helpers.sentence(
-                "Invalid input! Make Sure Than Task Number exist! \n", txt_color=Colors.RED))
+            print(
+                helpers.sentence(
+                    "Invalid input! Make Sure Than Task Number exist! \n",
+                    txt_color=Colors.RED,
+                )
+            )
             continue
         else:
             break
 
-    print(helpers.sentence(
-        f"deleting Task number {task_index}...\n", txt_color=Colors.YELLOW))
+    print(
+        helpers.sentence(
+            f"deleting Task number {task_index}...\n", txt_color=Colors.YELLOW
+        )
+    )
     tasks.del_task(task_name=user_tasks[task_index][0])
     time.sleep(SLEEP_TIME)
-    print(helpers.sentence(
-        f"Task has been updated! \n", txt_color=Colors.YELLOW))
+    print(helpers.sentence(f"Task has been updated! \n", txt_color=Colors.YELLOW))
     show_tasks_section(username)
 
 
@@ -263,19 +299,23 @@ def show_tasks_per_specific_date(username):
     - username (str): The username of the user whose tasks are being displayed.
     """
     while True:
-        task_due_date = input(helpers.sentence(
-            'Enter a task due date (YYYY-MM-DD): \n'))
+        task_due_date = input(
+            helpers.sentence("Enter a task due date (YYYY-MM-DD): \n")
+        )
 
         if not tasks.validate_date(task_due_date):
-            print(helpers.sentence(
-                "Invalid date format. Please enter a date in the format 'YYYY-MM-DD'.\n", txt_color=Colors.RED))
+            print(
+                helpers.sentence(
+                    "Invalid date format. Please enter a date in the format 'YYYY-MM-DD'.\n",
+                    txt_color=Colors.RED,
+                )
+            )
             continue
         else:
             break
     print(f"Selected date is {task_due_date}")
-    helpers.print_section_title(title=f'Selected date is{task_due_date}')
+    helpers.print_section_title(title=f"Selected date is{task_due_date}")
     show_tasks_per_date(username, task_due_date)
-    
 
 
 def handel_task_option(options, username):
@@ -298,16 +338,16 @@ def handel_task_option(options, username):
         user_option = input(OPTION_TEXT).strip()
         if validate_user_input(user_option, options):
             break
-    if user_option == '1':
+    if user_option == "1":
         show_tasks_per_specific_date(username)
 
-    elif user_option == '2':
+    elif user_option == "2":
         create_new_task(username)
 
-    elif user_option == '3':
+    elif user_option == "3":
         update_task_status(username)
 
-    elif user_option == '4':
+    elif user_option == "4":
         delete_task(username)
 
     else:
@@ -325,7 +365,7 @@ def show_tasks_section(username):
     Args:
     - username (str): The username of the user whose tasks are being displayed.
     """
-    helpers.print_section_title(title='Welcome to Tasks Tracker!')
+    helpers.print_section_title(title="Welcome to Tasks Tracker!")
     today_date = datetime.now().date()
     # demo_date = '2024-02-26'
     print(f"today date is {today_date}")
@@ -366,34 +406,49 @@ def create_account_input():
     the new account.
 
     """
-    helpers.print_section_title(title='Create New Account!',
-                                is_sleep=False, text_color=Colors.MAGENTA)
+    helpers.print_section_title(
+        title="Create New Account!", is_sleep=False, text_color=Colors.MAGENTA
+    )
 
-    fullname = input(helpers.sentence(
-            'Enter your Full name!\n')).capitalize()
+    fullname = input(helpers.sentence("Enter your Full name!\n")).capitalize()
     while True:
         email = input(helpers.sentence("Enter your Email address!:\n"))
 
         if not user.is_valid_email(email):
-            print(helpers.sentence(
-                "Invalid or existing email address\n", txt_color=Colors.RED))
+            print(
+                helpers.sentence(
+                    "Invalid or existing email address\n", txt_color=Colors.RED
+                )
+            )
             continue
         else:
             break
-    
+
     while True:
-        username = input(helpers.sentence(
-            "Now enter a username. Make sure it does not have any spaces:\n"))
+        username = input(
+            helpers.sentence(
+                "Now enter a username. Make sure it does not have any spaces:\n"
+            )
+        )
         if " " in username:
-            print(helpers.sentence(
-                "Your username can't have spaces. Please try again.\n", txt_color=Colors.RED))
+            print(
+                helpers.sentence(
+                    "Your username can't have spaces. Please try again.\n",
+                    txt_color=Colors.RED,
+                )
+            )
             continue
-        
 
         if user.username_exists(username):
-            print(helpers.sentence(
-                "Username already exists.\n", txt_color=Colors.RED))
-            if input(helpers.sentence("Would you like to login instead? (Enter 'yes' or 'no'): ")).lower() == 'yes':
+            print(helpers.sentence("Username already exists.\n", txt_color=Colors.RED))
+            if (
+                input(
+                    helpers.sentence(
+                        "Would you like to login instead? (Enter 'yes' or 'no'): "
+                    )
+                ).lower()
+                == "yes"
+            ):
                 login_input()
             continue
         else:
@@ -401,23 +456,24 @@ def create_account_input():
 
     while True:
         password = input(helpers.sentence("Enter your Password: \n"))
-        confirm_password = input(
-            helpers.sentence("Re-enter your Password: \n"))
+        confirm_password = input(helpers.sentence("Re-enter your Password: \n"))
         if password == confirm_password:
             break
         else:
-            print(helpers.sentence(
-                "password and confirmPassword don't match. Please try again.\n", txt_color=Colors.RED))
+            print(
+                helpers.sentence(
+                    "password and confirmPassword don't match. Please try again.\n",
+                    txt_color=Colors.RED,
+                )
+            )
 
     print(helpers.sentence(f"Creating New Account...\n", txt_color=Colors.YELLOW))
-    user.add_new_user(fullname=fullname, username=username,
-                        email=email, password=password)
-    print(helpers.sentence(
-        f"New user has been added! \n", txt_color=Colors.YELLOW))
+    user.add_new_user(
+        fullname=fullname, username=username, email=email, password=password
+    )
+    print(helpers.sentence(f"New user has been added! \n", txt_color=Colors.YELLOW))
     time.sleep(SLEEP_TIME)
     show_tasks_section(username)
-    
-    
 
 
 def login_input():
@@ -430,38 +486,47 @@ def login_input():
     If the login is successful, displays a welcome message and retrieves the user's tasks.
 
     """
-    helpers.print_section_title(title='Login! Enter your Creditionals')
+    helpers.print_section_title(title="Login! Enter your Creditionals")
     while True:
         username = input(helpers.sentence(txt="Enter your username :\n"))
         password = input(helpers.sentence(txt="Enter your password :\n"))
         # user login failed
-        if (not user.login(username, password)):
-            print(helpers.sentence(
-                txt="\nSorry,username or password are wrong.", txt_color=Colors.RED))
-            options = ['1', '2', '3']
+        if not user.login(username, password):
+            print(
+                helpers.sentence(
+                    txt="\nSorry,username or password are wrong.", txt_color=Colors.RED
+                )
+            )
+            options = ["1", "2", "3"]
             login_extra_options(options)
             handel_extra_options(options)
         # user login sucessed
         else:
             break
     print(
-        f"{Colors.MAGENTA} Welcome Back, {username}. Retrieving your Tasks... {Colors.RESET}")
+        f"{Colors.MAGENTA} Welcome Back, {username}. Retrieving your Tasks... {Colors.RESET}"
+    )
     show_tasks_section(username)
+
 
 def preview_table():
     show_tasks_preview_table()
     while True:
-        is_back_home = input(helpers.sentence(txt="Enter 'yes' to Back Home :\n")).lower()
-        
-        if (is_back_home == 'yes'):
+        is_back_home = input(
+            helpers.sentence(txt="Enter 'yes' to Back Home :\n")
+        ).lower()
+
+        if is_back_home == "yes":
             break
         # user login sucessed
         else:
-            print(helpers.sentence(
-                txt="\nInvalid Input. Try again!", txt_color=Colors.RED))
+            print(
+                helpers.sentence(
+                    txt="\nInvalid Input. Try again!", txt_color=Colors.RED
+                )
+            )
     back_home()
 
-    
 
 def handel_option(options):
     """
@@ -477,18 +542,23 @@ def handel_option(options):
         user_option = input(OPTION_TEXT).strip()
         if validate_user_input(user_option, options):
             break
-    if user_option == '1':
+    if user_option == "1":
         login_input()
 
-    elif user_option == '2':
+    elif user_option == "2":
         create_account_input()
-    elif user_option == '3':
+    elif user_option == "3":
         preview_table()
     else:
         helpers.print_section_title(
-            title='Quitting app... ', is_sleep=True, text_color=Colors.RED)
-        helpers.print_section_title(title='Thanks for using Our APP: See You Soon  ',
-                                    is_sleep=False, text_color=Colors.MAGENTA, emoji='\U0001F609')
+            title="Quitting app... ", is_sleep=True, text_color=Colors.RED
+        )
+        helpers.print_section_title(
+            title="Thanks for using Our APP: See You Soon  ",
+            is_sleep=False,
+            text_color=Colors.MAGENTA,
+            emoji="\U0001F609",
+        )
 
 
 def print_option_table(options):
@@ -519,8 +589,12 @@ def display_home_menu():
 
 def print_welcome_messages():
     """Prints welcome messages."""
-    helpers.txt_effect(Colors.BOLD+Colors.RED +
-                       pyfiglet.figlet_format("Welcome to TaskTracker App!") + Colors.RESET)
+    helpers.txt_effect(
+        Colors.BOLD
+        + Colors.RED
+        + pyfiglet.figlet_format("Welcome to TaskTracker App!")
+        + Colors.RESET
+    )
 
 
 def run_task_tracker():

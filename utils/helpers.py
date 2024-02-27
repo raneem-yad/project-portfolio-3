@@ -5,10 +5,10 @@ import sys
 from utils.theme import Colors
 
 
-
 def clear_terminal():
     """Clears the terminal screen."""
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system("cls" if os.name == "nt" else "clear")
+
 
 def txt_effect(text_to_print):
     """
@@ -21,10 +21,11 @@ def txt_effect(text_to_print):
         sys.stdout.write(character)
         sys.stdout.flush()
         time.sleep(0.005)
-    
+
     time.sleep(0.7)
-    
-def print_section_title(title, is_sleep=False, text_color=Colors.MAGENTA, emoji=''):
+
+
+def print_section_title(title, is_sleep=False, text_color=Colors.MAGENTA, emoji=""):
     """
     Prints a section title with optional sleep delay.
 
@@ -37,11 +38,12 @@ def print_section_title(title, is_sleep=False, text_color=Colors.MAGENTA, emoji=
     clear_terminal()
     print("----------------------------------\n")
     print(f"{text_color}{title} {emoji}{Colors.RESET}\n")
-    print("----------------------------------")   
+    print("----------------------------------")
     if is_sleep:
         time.sleep(1.5)
 
-def sentence(txt, txt_color =  Colors.MAGENTA): 
+
+def sentence(txt, txt_color=Colors.MAGENTA):
     """
     Formats a sentence as a question.
 
@@ -53,5 +55,3 @@ def sentence(txt, txt_color =  Colors.MAGENTA):
         str: The formatted sentence.
     """
     return f"{txt_color}{txt} {Colors.RESET}"
-
-

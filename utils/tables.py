@@ -9,7 +9,12 @@ class TablesDrawing:
         self.indexed = indexed
 
     def print_table(self):
-        return tabulate(self.columns, headers=self.headers, tablefmt=self.style, showindex=self.indexed)
+        return tabulate(
+            self.columns,
+            headers=self.headers,
+            tablefmt=self.style,
+            showindex=self.indexed,
+        )
 
 
 def create_columns(*columns):
