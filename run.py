@@ -49,7 +49,7 @@ def print_task_option_table(options):
     messages = ["Show Tasks for another date", "Add new Task",
                 "Make Task as Done", "Delete Task", "Back Home"]
     headers = ["Options", "Press"]
-    columns = table.create_rows(messages, options)
+    columns = table.create_columns(messages, options)
     intro_table = table.TablesDrawing(columns, headers)
     print(intro_table.print_table())
 
@@ -479,7 +479,7 @@ def print_option_table(options):
     """
     messages = ["Login", "Create Account", "App Preview", "Quit App"]
     headers = ["How we can Help you", "Press"]
-    columns = table.create_rows(messages, options)
+    columns = table.create_columns(messages, options)
     intro_table = table.TablesDrawing(columns, headers)
     print(intro_table.print_table())
 
