@@ -25,7 +25,9 @@ def txt_effect(text_to_print):
     time.sleep(0.7)
 
 
-def print_section_title(title, is_sleep=False, text_color=Colors.MAGENTA, emoji=""):
+def print_section_title(
+    title, is_sleep=False, text_color=Colors.MAGENTA, emoji=""
+):
     """
     Prints a section title with optional sleep delay.
 

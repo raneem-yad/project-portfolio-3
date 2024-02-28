@@ -177,7 +177,9 @@ def create_new_task(username):
         )
 
         priority = input(
-            helpers.sentence("What the Task Priority from 1-3, 1 is the Highest!\n")
+            helpers.sentence(
+                "What the Task Priority from 1-3, 1 is the Highest!\n"
+            )
         )
         if priority not in ["1", "2", "3"]:
             print(
@@ -192,7 +194,11 @@ def create_new_task(username):
     tasks.add_new_task(
         task=task, details=task_details, priority=priority, username=username
     )
-    print(helpers.sentence(f"New user has been added! \n", txt_color=Colors.YELLOW))
+    print(
+        helpers.sentence(
+            f"New user has been added! \n", txt_color=Colors.YELLOW
+        )
+    )
     show_tasks_section(username)
 
 
@@ -212,7 +218,9 @@ def update_task_status(username):
     while True:
         task_index = int(
             input(
-                helpers.sentence("Which Task you want to change! Enter Task Number\n")
+                helpers.sentence(
+                    "Which Task you want to change! Enter Task Number\n"
+                )
             ).strip()
         )
 
@@ -223,7 +231,6 @@ def update_task_status(username):
                     txt_color=Colors.RED,
                 )
             )
-            # continue
         elif (user_tasks[task_index][2]).strip() == "Yes":
             print(
                 helpers.sentence(
@@ -237,12 +244,15 @@ def update_task_status(username):
 
     print(
         helpers.sentence(
-            f"Updating Task Status number {task_index}...\n", txt_color=Colors.YELLOW
+            f"Updating Task Status number {task_index}...\n",
+            txt_color=Colors.YELLOW,
         )
     )
     tasks.update_status(task_name=user_tasks[task_index][0])
     time.sleep(SLEEP_TIME)
-    print(helpers.sentence(f"Task has been updated! \n", txt_color=Colors.YELLOW))
+    print(
+        helpers.sentence(f"Task has been updated! \n", txt_color=Colors.YELLOW)
+    )
     show_tasks_section(username)
 
 
@@ -261,7 +271,9 @@ def delete_task(username):
     """
     while True:
         task_index = int(
-            input(helpers.sentence("Which Task you want to Delete it!\n")).strip()
+            input(
+                helpers.sentence("Which Task you want to Delete it!\n")
+            ).strip()
         )
 
         if task_index not in list(range(len(user_tasks))):
@@ -282,7 +294,9 @@ def delete_task(username):
     )
     tasks.del_task(task_name=user_tasks[task_index][0])
     time.sleep(SLEEP_TIME)
-    print(helpers.sentence(f"Task has been updated! \n", txt_color=Colors.YELLOW))
+    print(
+        helpers.sentence(f"Task has been updated! \n", txt_color=Colors.YELLOW)
+    )
     show_tasks_section(username)
 
 
@@ -367,7 +381,6 @@ def show_tasks_section(username):
     """
     helpers.print_section_title(title="Welcome to Tasks Tracker!")
     today_date = datetime.now().date()
-    # demo_date = '2024-02-26'
     print(f"today date is {today_date}")
     show_tasks_per_date(username, today_date)
 
@@ -387,9 +400,7 @@ def show_tasks_per_date(username, date):
     """
     global user_tasks
     user_tasks = tasks.get_tasks_per_date(username, date)
-    # print(tabulate({"Today Tasks": user_tasks}, headers="keys"))
     show_today_tasks_table(user_tasks)
-    # show tasks options
     options = ["1", "2", "3", "4", "5"]
     print_task_option_table(options)
     handel_task_option(options, username)
@@ -440,7 +451,11 @@ def create_account_input():
             continue
 
         if user.username_exists(username):
-            print(helpers.sentence("Username already exists.\n", txt_color=Colors.RED))
+            print(
+                helpers.sentence(
+                    "Username already exists.\n", txt_color=Colors.RED
+                )
+            )
             if (
                 input(
                     helpers.sentence(
@@ -467,11 +482,17 @@ def create_account_input():
                 )
             )
 
-    print(helpers.sentence(f"Creating New Account...\n", txt_color=Colors.YELLOW))
+    print(
+        helpers.sentence(f"Creating New Account...\n", txt_color=Colors.YELLOW)
+    )
     user.add_new_user(
         fullname=fullname, username=username, email=email, password=password
     )
-    print(helpers.sentence(f"New user has been added! \n", txt_color=Colors.YELLOW))
+    print(
+        helpers.sentence(
+            f"New user has been added! \n", txt_color=Colors.YELLOW
+        )
+    )
     time.sleep(SLEEP_TIME)
     show_tasks_section(username)
 
@@ -494,7 +515,8 @@ def login_input():
         if not user.login(username, password):
             print(
                 helpers.sentence(
-                    txt="\nSorry,username or password are wrong.", txt_color=Colors.RED
+                    txt="\nSorry,username or password are wrong.",
+                    txt_color=Colors.RED,
                 )
             )
             options = ["1", "2", "3"]

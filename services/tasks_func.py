@@ -129,7 +129,11 @@ def show_priority_label(priority):
     Returns:
     - str: The human-readable label for the priority level.
     """
-    priority_labels = {"1": "High Priority", "2": "Mid Priority", "3": "Low Priority"}
+    priority_labels = {
+        "1": "High Priority",
+        "2": "Mid Priority",
+        "3": "Low Priority",
+    }
     return priority_labels.get(priority, "Invalid Priority")
 
 
@@ -239,7 +243,15 @@ def add_new_task(task, details, priority, username):
     today_date = str(datetime.now().date())
     status = "0"
 
-    new_task = [new_task_id, user_id, task, details, priority, today_date, status]
+    new_task = [
+        new_task_id,
+        user_id,
+        task,
+        details,
+        priority,
+        today_date,
+        status,
+    ]
     conn.update_worksheet(new_task, SHEET_NAME)
 
 
@@ -259,7 +271,9 @@ def update_status(task_name):
 
     updated_task_row_position = cell.row
     updated_task_col_position = STATUS_COLUMN_INDEX
-    tasks_sheet.update_cell(updated_task_row_position, updated_task_col_position, "1")
+    tasks_sheet.update_cell(
+        updated_task_row_position, updated_task_col_position, "1"
+    )
 
 
 def del_task(task_name):
