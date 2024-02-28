@@ -2,7 +2,7 @@
 
 ![Landing Page Screenshot](readme/home_page.png)
 
-The deployed webapp can be accessed [here](https://task-tracker-pp3-a601e8d655b1.herokuapp.com/).
+The deployed web app can be accessed [here](https://task-tracker-pp3-a601e8d655b1.herokuapp.com/).
 
 Task Tracker is a Python command-line application designed to help users effectively manage their tasks. It provides features for creating, updating, and tracking tasks, along with user authentication and data persistence.
 
@@ -23,7 +23,7 @@ Task Tracker is a Python command-line application designed to help users effecti
 
     -   <b>Students:</b> TaskTracker can assist students in organizing their academic assignments, projects, and deadlines.
 
-    -   <b>Productivity Enthusiasts:</b> Individuals interested in personal productivity and time management techniques may find TaskTracker valuable for implementing task prioritization, and goal setting strategies.
+    -   <b>Productivity Enthusiasts:</b> Individuals interested in personal productivity and time management techniques may find TaskTracker valuable for implementing task prioritization, and goal-setting strategies.
 
 *   ### User stories
 
@@ -36,7 +36,7 @@ Task Tracker is a Python command-line application designed to help users effecti
     -   As a user, I want to be able to update the status of a task (e.g., mark it as completed) so that I can track my progress.
     -   As a user, I want to delete a task that I no longer need so that my task list remains organized.
     -   As a user, I want the input dates to be validated to ensure they are in the correct format (YYYY-MM-DD).
-    -   As a user, I want the all inputs  to be validated to ensure they are in the correct format.
+    -   As a user, I want all inputs  to be validated to ensure they are in the correct format.
     -   As a user, I want to receive feedback on successful or unsuccessful task management operations.
     -   As a user, I want the Task Tracker website to have a user-friendly interface for easy navigation and interaction.
 <br>
@@ -52,13 +52,13 @@ Task Tracker is a Python command-line application designed to help users effecti
 <br>
 
 *   ### Design
-    The tracking system displays pages as steps for tracking daily tasks. Every page contains information guiding the user how to interact with the application<br>
+    The tracking system displays pages as steps for tracking daily tasks. Every page contains information guiding the user on how to interact with the application<br>
     -   <b>TaskTracker Menu Page:</b>
-        When the user first launches the program a welcome message is displayed with options table.<br>
+        When the user first launches the program a welcome message is displayed with an options table.<br>
 <img src="readme/home.png" width="80%"><br>
 
     -   <b>TaskTracker Tasks Page</b>
-          When the user login and see his daily tasks.<br>
+          When the user logs in and sees his daily tasks.<br>
 <img src="readme/tasks_menu.png" width="80%"><br>
 
     -   <b>TaskTracker overview Tasks Page</b>
@@ -74,29 +74,28 @@ Task Tracker is a Python command-line application designed to help users effecti
     -   <b>Task Management:</b> Users can create, update, and delete tasks, as well as view tasks by specific dates.
        <img src="readme/tasks_option.png" width="80%"><br>
 
-    -   <b>Priority and Status Tracking:</b> Tasks are assigned priority levels and marked as completed or pending. Completed tasks are visually distinguished with green color, while pending tasks are highlighted in red.
+    -   <b>Priority and Status Tracking:</b> Tasks are assigned priority levels and marked as completed or pending. Completed tasks are visually distinguished with green color while pending tasks are highlighted in red.
       <img src="readme/status.png" width="80%"><br>
 
     -   <b>Date Validation:</b>
         Input dates are validated to ensure they are in the correct format (YYYY-MM-DD).
          <img src="readme/date_valid.png" width="80%"><br>
     -   <b>Data Validation:</b>
-        All Inputs data are validated to ensure they are in the correct format.
+        All Input data are validated to ensure they are in the correct format.
          <img src="readme/data_valid.png" width="80%">
          <img src="readme/data_valid2.png" width="80%"><br>
 
     -   <b>User-Friendly Interface:</b> The application features a simple command-line interface for easy interaction.
  
-*   ### FUTURE FEATURES<br>
+*   ### Future Features<br>
     -   <b>Task Categories:</b> Allow users to categorize tasks into different categories or projects for better organization.
+    -   <b>Updating Completed Tasks:</b> Allow users to update tasks that are not yet done.
     -   <b>Overdue Task :</b> Provide visual table for overdue tasks.
     -   <b>Category Management:</b> Enable users to create, edit, and delete categories to organize tasks more efficiently.
     -   <b>Task Reminders:</b> Implement notifications or reminders for upcoming tasks to help users stay organized and on track.
 
 *   ### Remaining Bugs 
     -   <b>Task Duplication Issue:</b> Updating or deleting tasks may affect just the first task if they share the same name. This occurs when tasks are not uniquely identified, leading to unintended changes in task status or deletion. A fix is needed to ensure that tasks are properly identified and modified individually.
-
-    -   <b>Updating Completed Tasks:</b> Currently, the application allows updating tasks even if they have already been marked as completed. This behavior may lead to inconsistencies in task management and data integrity. Implementing validation to prevent updating completed tasks is necessary to maintain the accuracy of task statuses.<br>
 
 ## Project Structure
 The TaskTracker project follows a structured organization to maintain clarity and scalability. Below is an overview of the main directories and files within the project:
@@ -128,19 +127,19 @@ The TaskTracker project follows a structured organization to maintain clarity an
 ## Validator Testing
 - PEP8:
     - No errors were returned from http://pep8online.com
-    - also used a black formatter package which helps formating the python code https://pypi.org/project/black/
+    - also used a black formatted package which helps to formate the python code https://pypi.org/project/black/
 
 ## Deployment
 This project is deployed using Code Institute's mock terminal for Heroku.
 
 Steps for Deployment:
 1. Fork or Clone [this Repository](https://github.com/raneem-yad/project-portfolio-3.git)
-2. Set up Google Sheets and Google Drive APIs in Google Cloude
-3. Download the Key json file from Google, upload it to the project. Change the name to creds.json
+2. Set up Google Sheets and Google Drive APIs in Google Cloud
+3. Download the Key JSON file from Google, and upload it to the project. Change the name to creds.json
 4. Create a new Google Sheet named <b>'TaskTrack'</b>
 5. Add label one worksheet <b>'users'</b> and another one <b>'tasks'</b>
-6. Create new Heroku app
-7. Set the buildpacks to python and node.js (in that order)
+6. Create a new Heroku app
+7. Set the build packs to Python and node.js (in that order)
 8. Add Config Variables 'CREDS' and 'PORT'
 9. Link the Heroku app to the repository
 10. Click Deploy
@@ -150,7 +149,7 @@ Steps for Deployment:
 -   The code for clearing the terminal was adapted from a solution found on [stackoverflow](https://stackoverflow.com/questions/2084508/clear-terminal-in-python)
 -   The styling and text effects were inspired by and adapted from the [commandline-budgetapp
 ](https://github.com/adamsburge/commandline-budgetapp)
--   The code for linking to and manipulating the Google Spreadsheet was  ispired and adapted from the Code Institute Love Sandwiches tutorial.
+-   The code for linking to and manipulating the Google Spreadsheet was  inspired and adapted from the Code Institute Love Sandwiches tutorial.
   
 ## Acknowledgements
 
